@@ -1,0 +1,139 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+const promoItems = [
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image: "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image: "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+  },
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image: "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image: "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+  },
+];
+---
+
+<div class="-mt-8">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+    Costco Deals & Discounts
+  </h2>
+  <p class="text-lg mt-4 text-slate-600 text-center max-w-xl mx-auto">
+    Find the best deals at your local Costco Warehouse
+  </p>
+  
+  <!-- Search Box -->
+  <div class="max-w-xl mx-auto mt-8">
+    <div class="relative">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search deals..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <div class="absolute right-3 top-2.5 text-gray-400">
+        <Icon name="ic:baseline-search" class="w-6 h-6" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Filters -->
+  <div class="flex flex-wrap justify-center gap-4 mt-6">
+    <button class="px-4 py-2 text-sm bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200">
+      All Deals
+    </button>
+    <button class="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200">
+      Instant Savings
+    </button>
+    <button class="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200">
+      Member Only Savings
+    </button>
+    <button class="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200">
+      Online Only
+    </button>
+  </div>
+</div>
+
+<div id="productGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-16 gap-8">
+  {
+    promoItems.map((item) => (
+      <div class="product-card flex flex-col border rounded-lg shadow-sm hover:shadow-md transition-shadow">
+        <div class="p-4">
+          <div class="relative">
+            <img
+              src={item.image}
+              alt={item.title}
+              class="w-full h-48 object-contain mb-4"
+            />
+            <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 rounded-bl-lg">
+              Save ${(parseFloat(item.price) - parseFloat(item.final_price)).toFixed(2)}
+            </div>
+          </div>
+          <h3 class="font-semibold text-lg">{item.title}</h3>
+          <div class="mt-4 flex items-center gap-2">
+            <p class="text-2xl font-bold text-red-600">${item.final_price}</p>
+            <p class="text-lg text-gray-500 line-through">${item.price}</p>
+          </div>
+          <p class="text-slate-400 text-sm">{item.validUntil}</p>
+          <button class="mt-4 w-full bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+            Check Price History
+          </button>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const productCards = document.querySelectorAll('.product-card');
+
+  searchInput?.addEventListener('input', (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+
+    productCards.forEach((card) => {
+      const title = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+      const description = card.querySelector('p')?.textContent?.toLowerCase() || '';
+      
+      if (title.includes(searchTerm) || description.includes(searchTerm)) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+</script> 
