@@ -1,0 +1,458 @@
+---
+// @ts-ignore
+import { Icon } from "astro-icon/components";
+
+const promoItems = [
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Benadryl Allergy",
+    price: "24.99",
+    final_price: "19.99",
+    validUntil: "Valid until Apr 28, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    category: "Health & Beauty",
+  },
+  {
+    title: "Island Farms Milk",
+    price: "6.99",
+    final_price: "5.99",
+    validUntil: "Valid until Apr 21, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    category: "Fresh Food",
+  },
+  {
+    title: "Glaxal Base Cream",
+    price: "19.99",
+    final_price: "15.99",
+    validUntil: "Valid until Apr 30, 2024",
+    image:
+      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    category: "Health & Beauty",
+  },
+];
+
+// Get unique categories that have items
+const availableCategories = [
+  ...new Set(promoItems.map((item) => item.category)),
+];
+
+// Add pagination configuration
+const itemsPerPage = 12;
+const totalPages = Math.ceil(promoItems.length / itemsPerPage);
+---
+
+<div class="mt-4 mb-12">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+    Today's Costco Warehouse Deals
+  </h2>
+  <p class="text-lg mt-4 text-slate-600 text-center max-w-xl mx-auto">
+    Discover the latest Costco in-warehouse savings! 
+
+  <!-- Search Box -->
+  <div class="max-w-xl mx-auto mt-8">
+    <div class="relative">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search products, categories, or deals..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <div class="absolute right-3 top-2.5 text-gray-400">
+        <Icon name="ic:baseline-search" class="w-6 h-6" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Filters -->
+  <div class="flex flex-wrap justify-center gap-2 mt-6 max-w-6xl mx-auto px-4">
+    <button class="px-3 py-1.5 text-sm bg-[#C0A4F9] text-black rounded-[8px] hover:bg-[#b089ff]">
+      All Categories
+    </button>
+    {availableCategories.map((category) => (
+      <button class="px-3 py-1.5 text-sm bg-gray-100 text-gray-700 rounded-[8px] hover:bg-[#C0A4F9] hover:text-black">
+        {category}
+      </button>
+    ))}
+  </div>
+</div>
+
+<div
+  id="productGrid"
+  class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-16 gap-8 mb-16">
+  {
+    promoItems.map((item) => (
+      <div
+        class="product-card flex flex-col border rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        data-category={item.category}>
+        <div class="p-4">
+          <div class="relative">
+            <img
+              src={item.image}
+              alt={item.title}
+              class="w-full h-48 object-contain mb-4"
+            />
+            <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1.5 rounded-bl-lg">
+              <span class="text-lg font-bold">Save $
+                {(parseFloat(item.price) - parseFloat(item.final_price)).toFixed(2)}
+              </span>
+            </div>
+          </div>
+          <h3 class="font-semibold text-lg">{item.title}</h3>
+          <p class="text-sm text-gray-500 mt-1">{item.category}</p>
+          <div class="mt-4 flex items-center gap-2">
+            <p class="text-2xl font-bold text-red-600">${item.final_price}</p>
+            <p class="text-lg text-gray-500 line-through">${item.price}</p>
+          </div>
+          <p class="text-sm bg-[#E9E0FE] text-black px-2 py-1 rounded-[6px] inline-block mt-2">
+            {item.validUntil}
+          </p>
+          <button class="mt-4 w-full bg-black text-white py-2 px-4 rounded-[8px] hover:bg-gray-800 transition-colors">
+            Check Price History
+          </button>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<!-- Add pagination controls -->
+<div class="flex justify-center items-center gap-2 mt-12 mb-16">
+  <button
+    id="prevPage"
+    class="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    disabled
+  >
+    Previous
+  </button>
+  <div id="pageNumbers" class="flex gap-1">
+    <!-- Page numbers will be inserted here by JavaScript -->
+  </div>
+  <button
+    id="nextPage"
+    class="px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Next
+  </button>
+</div>
+
+<script>
+  const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+  const productGrid = document.getElementById("productGrid") as HTMLElement;
+  const productCards = document.querySelectorAll<HTMLElement>(".product-card");
+
+  const itemsPerPage = 12;
+  let currentPage = 1;
+  const prevButton = document.getElementById('prevPage') as HTMLButtonElement;
+  const nextButton = document.getElementById('nextPage') as HTMLButtonElement;
+  const pageNumbers = document.getElementById('pageNumbers');
+
+  function updatePagination() {
+    const filteredCards = Array.from(productCards).filter(
+      (card) => window.getComputedStyle(card).display !== 'none'
+    );
+    const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+    
+    // Update buttons state
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+
+    // Update page numbers
+    if (pageNumbers) {
+      pageNumbers.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i.toString();
+        pageButton.classList.add(
+          'px-3',
+          'py-1',
+          'text-sm',
+          'rounded-md',
+          'hover:bg-gray-200'
+        );
+        if (i === currentPage) {
+          pageButton.classList.add('bg-[#C0A4F9]', 'text-black');
+        } else {
+          pageButton.classList.add('bg-gray-100', 'text-gray-700');
+        }
+        pageButton.addEventListener('click', () => {
+          currentPage = i;
+          updateDisplay();
+        });
+        pageNumbers.appendChild(pageButton);
+      }
+    }
+
+    // Show/hide products based on current page
+    filteredCards.forEach((card, index) => {
+      if (index >= (currentPage - 1) * itemsPerPage && 
+          index < currentPage * itemsPerPage) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  function updateDisplay() {
+    // First, show all cards that match current filters
+    productCards.forEach(card => {
+      if (currentCategory === "All Categories" || 
+          card.getAttribute("data-category") === currentCategory) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    // Then apply pagination
+    updatePagination();
+  }
+
+  function showEmptyState(message = "Try adjusting your search or filter criteria") {
+    const emptyStateHTML = `
+      <div class="col-span-full flex flex-col items-center justify-center py-16">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">
+          No items found
+        </h3>
+        <p class="text-gray-500 text-center">
+          ${message}
+        </p>
+      </div>
+    `;
+    if (productGrid) {
+      productGrid.innerHTML = emptyStateHTML;
+    }
+  }
+
+  function removeEmptyState() {
+    const emptyState = productGrid?.querySelector(".col-span-full");
+    if (emptyState) {
+      emptyState.remove();
+    }
+  }
+
+  // Fix search functionality
+  searchInput?.addEventListener("input", (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+    currentPage = 1;
+
+    let hasVisibleCards = false;
+    const originalCards = Array.from(productCards);
+
+    productCards.forEach((card) => {
+      const title = card.querySelector("h3")?.textContent?.toLowerCase() || "";
+      const category = card.querySelector(".text-gray-500")?.textContent?.toLowerCase() || "";
+
+      if (title.includes(searchTerm) || category.includes(searchTerm)) {
+        if (currentCategory === "All Categories" || 
+            card.getAttribute("data-category") === currentCategory) {
+          card.style.display = "flex";
+          hasVisibleCards = true;
+        } else {
+          card.style.display = "none";
+        }
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    if (!hasVisibleCards) {
+      showEmptyState("No items match your search. Try different keywords or filters.");
+    } else {
+      removeEmptyState();
+      // Restore original cards to the grid if they were removed
+      originalCards.forEach(card => {
+        if (!productGrid?.contains(card)) {
+          productGrid?.appendChild(card);
+        }
+      });
+      updatePagination();
+    }
+  });
+
+  // Get all product cards and category buttons
+  const categoryButtons = document.querySelectorAll(
+    ".flex.flex-wrap.justify-center button",
+  );
+  let currentCategory = "All Categories";
+
+  categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      // Update active button styling
+      categoryButtons.forEach((btn) => {
+        btn.classList.remove("bg-[#E9E0FE]", "text-black");
+        btn.classList.add("bg-gray-100", "text-gray-700");
+      });
+      button.classList.remove("bg-gray-100", "text-gray-700");
+      button.classList.add("bg-[#E9E0FE]", "text-black");
+
+      // Get selected category
+      currentCategory = button.textContent?.trim() || "All Categories";
+
+      // Count visible items
+      let visibleCount = 0;
+
+      // Filter products
+      productCards.forEach((card) => {
+        if (currentCategory === "All Categories") {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          const cardCategory = card.getAttribute("data-category");
+          if (cardCategory === currentCategory) {
+            card.style.display = "";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        }
+      });
+
+      // After filtering, reset to first page and update display
+      currentPage = 1;
+      updateDisplay();
+    });
+  });
+
+  // Add pagination button handlers
+  prevButton?.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      updateDisplay();
+    }
+  });
+
+  nextButton?.addEventListener('click', () => {
+    const filteredCards = Array.from(productCards).filter(
+      (card) => window.getComputedStyle(card).display !== 'none'
+    );
+    const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+    
+    if (currentPage < totalPages) {
+      currentPage++;
+      updateDisplay();
+    }
+  });
+
+  // Initial setup - show first page
+  updateDisplay();
+</script>
+
