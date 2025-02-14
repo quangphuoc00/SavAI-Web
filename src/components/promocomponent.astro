@@ -1,152 +1,169 @@
 ---
-// @ts-ignore
+// @ts-nocheck
 import { Icon } from "astro-icon/components";
+import { supabase } from '../lib/supabase';
+import mixpanel from 'mixpanel-browser';
+
+// Add locations array at the top with other constants
+const locations = [
+  "Calgary, AB",
+  "Edmonton, AB", 
+  "Langley, BC",
+  "Vancouver, BC",
+  "Winnipeg, MB",
+  "Burlington, ON",
+  "London, ON",
+  "Mississauga & Oakville, ON",
+  "Ottawa, ON", 
+  "Toronto, ON",
+  "Saskatoon, SK"
+];
 
 const promoItems = [
   {
-    title: "Benadryl Allergy",
-    price: "24.99",
-    final_price: "19.99",
-    validUntil: "Valid until Apr 28, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    name: "Benadryl Allergy",
+    image: "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
     category: "Health & Beauty",
+    price_history: [
+      {
+        posted_date: "2024-02-10",
+        savings: 5.00,
+        expiry_date: "2024-04-28",
+        final_price: 19.99
+      },
+      {
+        posted_date: "2024-02-07",
+        savings: 2.50,
+        expiry_date: "2024-04-21",
+        final_price: 22.49
+      },
+      {
+        posted_date: "2023-10-28",
+        savings: 3.00,
+        expiry_date: "2023-11-30",
+        final_price: 21.99
+      }
+    ]
   },
   {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
+    name: "Island Farms Milk",
+    image: "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
     category: "Fresh Food",
+    price_history: [
+      {
+        posted_date: "2024-02-10",
+        savings: 1.00,
+        expiry_date: "2024-04-21",
+        final_price: 5.99
+      },
+      {
+        posted_date: "2024-01-15",
+        savings: 0.50,
+        expiry_date: "2024-02-15",
+        final_price: 6.49
+      }
+    ]
   },
   {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    name: "Glaxal Base Cream",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
     category: "Health & Beauty",
+    price_history: [
+      {
+        posted_date: "2024-02-15",
+        savings: 4.00,
+        expiry_date: "2024-04-30",
+        final_price: 15.99
+      },
+      {
+        posted_date: "2024-01-20",
+        savings: 2.00,
+        expiry_date: "2024-02-10",
+        final_price: 17.99
+      },
+      {
+        posted_date: "2023-12-01",
+        savings: 3.00,
+        expiry_date: "2023-12-31",
+        final_price: 16.99
+      }
+    ]
   },
   {
-    title: "Benadryl Allergy",
-    price: "24.99",
-    final_price: "19.99",
-    validUntil: "Valid until Apr 28, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
+    name: "Glaxal Base Cream",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
     category: "Health & Beauty",
+    price_history: [
+      {
+        posted_date: "2024-02-15",
+        savings: 4.00,
+        expiry_date: "2024-04-30",
+        final_price: 15.99
+      },
+      {
+        posted_date: "2024-01-20",
+        savings: 2.00,
+        expiry_date: "2024-02-10",
+        final_price: 17.99
+      },
+      {
+        posted_date: "2023-12-01",
+        savings: 3.00,
+        expiry_date: "2023-12-31",
+        final_price: 16.99
+      }
+    ]
   },
   {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-  },
-  {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    name: "Glaxal Base Cream",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
     category: "Health & Beauty",
+    price_history: [
+      {
+        posted_date: "2024-02-15",
+        savings: 4.00,
+        expiry_date: "2024-04-30",
+        final_price: 15.99
+      },
+      {
+        posted_date: "2024-01-20",
+        savings: 2.00,
+        expiry_date: "2024-02-10",
+        final_price: 17.99
+      },
+      {
+        posted_date: "2023-12-01",
+        savings: 3.00,
+        expiry_date: "2023-12-31",
+        final_price: 16.99
+      }
+    ]
   },
   {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-  },
-  {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
+    name: "Glaxal Base Cream",
+    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
     category: "Health & Beauty",
-  },
-  {
-    title: "Benadryl Allergy",
-    price: "24.99",
-    final_price: "19.99",
-    validUntil: "Valid until Apr 28, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
-    category: "Health & Beauty",
-  },
-  {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-  },
-  {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-  },
-  {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-  },
-  {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-  },
-  {
-    title: "Benadryl Allergy",
-    price: "24.99",
-    final_price: "19.99",
-    validUntil: "Valid until Apr 28, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
-    category: "Health & Beauty",
-  },
-  {
-    title: "Island Farms Milk",
-    price: "6.99",
-    final_price: "5.99",
-    validUntil: "Valid until Apr 21, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-  },
-  {
-    title: "Glaxal Base Cream",
-    price: "19.99",
-    final_price: "15.99",
-    validUntil: "Valid until Apr 30, 2024",
-    image:
-      "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-  },
+    price_history: [
+      {
+        posted_date: "2024-02-15",
+        savings: 4.00,
+        expiry_date: "2024-04-30",
+        final_price: 15.99
+      },
+      {
+        posted_date: "2024-01-20",
+        savings: 2.00,
+        expiry_date: "2024-02-10",
+        final_price: 17.99
+      },
+      {
+        posted_date: "2023-12-01",
+        savings: 3.00,
+        expiry_date: "2023-12-31",
+        final_price: 16.99
+      }
+    ]
+  }
 ];
 
 // Get unique categories that have items
@@ -166,13 +183,29 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   <p class="text-lg mt-4 text-slate-600 text-center max-w-xl mx-auto">
     Discover the latest Costco in-warehouse savings! 
 
-  <!-- Search Box -->
-  <div class="max-w-xl mx-auto mt-8">
-    <div class="relative">
+  <!-- Search and Location Row -->
+  <div class="max-w-xl mx-auto mt-8 flex gap-4">
+    <!-- Location Selector -->
+    <div class="relative w-1/3">
+      <select
+        id="warehouseSelect"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+      >
+        {locations.map((location) => (
+          <option value={location}>{location}</option>
+        ))}
+      </select>
+      <div class="absolute right-3 top-2.5 text-gray-400 pointer-events-none">
+        <Icon name="ic:baseline-location-on" class="w-6 h-6" />
+      </div>
+    </div>
+
+    <!-- Search Box -->
+    <div class="relative flex-1">
       <input
         type="text"
         id="searchInput"
-        placeholder="Search products, categories, or deals..."
+        placeholder="Search products..."
         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       <div class="absolute right-3 top-2.5 text-gray-400">
@@ -194,42 +227,74 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   </div>
 </div>
 
+<!-- Price History Dialog -->
+<div id="priceHistoryDialog" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4" onclick="event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold">Price History</h3>
+      <button class="text-gray-500 hover:text-gray-700" id="closeHistoryBtn">
+        <Icon name="ic:baseline-close" class="w-6 h-6" />
+      </button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b">
+            <th class="text-left py-2">Updated</th>
+            <th class="text-left py-2">EXP</th>
+            <th class="text-left py-2">Savings</th>
+            <th class="text-left py-2">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Will be populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <div
   id="productGrid"
   class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-16 gap-8 mb-16">
   {
-    promoItems.map((item) => (
-      <div
-        class="product-card flex flex-col border rounded-lg shadow-sm hover:shadow-md transition-shadow"
-        data-category={item.category}>
-        <div class="p-4">
-          <div class="relative">
-            <img
-              src={item.image}
-              alt={item.title}
-              class="w-full h-48 object-contain mb-4"
-            />
-            <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1.5 rounded-bl-lg">
-              <span class="text-lg font-bold">Save $
-                {(parseFloat(item.price) - parseFloat(item.final_price)).toFixed(2)}
-              </span>
+    promoItems.map((item) => {
+      const currentPrice = item.price_history[0];
+      const regularPrice = (currentPrice.final_price + currentPrice.savings).toFixed(2);
+      
+      return (
+        <div
+          class="product-card flex flex-col border rounded-lg shadow-sm hover:shadow-md transition-shadow"
+          data-category={item.category}>
+          <div class="p-4">
+            <div class="relative">
+              <img
+                src={item.image}
+                alt={item.name}
+                class="w-full h-48 object-contain mb-4"
+              />
+              <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1.5 rounded-bl-lg">
+                <span class="text-lg font-bold">Save ${currentPrice.savings.toFixed(2)}</span>
+              </div>
             </div>
+            <h3 class="font-semibold text-lg">{item.name}</h3>
+            <p class="text-sm text-gray-500 mt-1">{item.category}</p>
+            <div class="mt-4 flex items-center gap-2">
+              <p class="text-2xl font-bold text-red-600">${currentPrice.final_price}</p>
+              <p class="text-lg text-gray-500 line-through">${regularPrice}</p>
+            </div>
+            <p class="text-sm bg-[#E9E0FE] text-black px-2 py-1 rounded-[6px] inline-block mt-2">
+              Valid until {new Date(currentPrice.expiry_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </p>
+            <button 
+              class="mt-4 w-full bg-black text-white py-2 px-4 rounded-[8px] hover:bg-gray-800 transition-colors"
+              data-price-history={JSON.stringify(item.price_history)}>
+              Check Price History
+            </button>
           </div>
-          <h3 class="font-semibold text-lg">{item.title}</h3>
-          <p class="text-sm text-gray-500 mt-1">{item.category}</p>
-          <div class="mt-4 flex items-center gap-2">
-            <p class="text-2xl font-bold text-red-600">${item.final_price}</p>
-            <p class="text-lg text-gray-500 line-through">${item.price}</p>
-          </div>
-          <p class="text-sm bg-[#E9E0FE] text-black px-2 py-1 rounded-[6px] inline-block mt-2">
-            {item.validUntil}
-          </p>
-          <button class="mt-4 w-full bg-black text-white py-2 px-4 rounded-[8px] hover:bg-gray-800 transition-colors">
-            Check Price History
-          </button>
         </div>
-      </div>
-    ))
+      );
+    })
   }
 </div>
 
@@ -254,6 +319,34 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
 </div>
 
 <script>
+  // Move these functions to the top of the script
+  function showPriceHistory(priceHistory) {
+    const dialog = document.getElementById('priceHistoryDialog');
+    if (dialog) {
+      const tbody = dialog.querySelector('tbody');
+      if (tbody) {
+        tbody.innerHTML = priceHistory.map((record, index) => `
+          <tr class="${index % 2 === 0 ? 'border-b bg-gray-50' : 'border-b'}">
+            <td class="py-2">${new Date(record.posted_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+            <td class="py-2">${new Date(record.expiry_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+            <td class="py-2">$${record.savings.toFixed(2)}</td>
+            <td class="py-2">$${record.final_price}</td>
+          </tr>
+        `).join('');
+      }
+      dialog.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closePriceHistory() {
+    const dialog = document.getElementById('priceHistoryDialog');
+    if (dialog) {
+      dialog.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+  }
+
   const searchInput = document.getElementById("searchInput") as HTMLInputElement;
   const productGrid = document.getElementById("productGrid") as HTMLElement;
   const productCards = document.querySelectorAll<HTMLElement>(".product-card");
@@ -263,6 +356,28 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   const prevButton = document.getElementById('prevPage') as HTMLButtonElement;
   const nextButton = document.getElementById('nextPage') as HTMLButtonElement;
   const pageNumbers = document.getElementById('pageNumbers');
+
+  // Add warehouse select element
+  const warehouseSelect = document.getElementById('warehouseSelect') as HTMLSelectElement;
+  
+  let currentCategory = "All Categories";
+
+  // Get user's location and set default warehouse
+  async function setDefaultWarehouse() {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      
+      // Find closest warehouse based on latitude/longitude
+      // For now, just default to Vancouver, BC
+      warehouseSelect.value = "Vancouver, BC";
+      
+      // Trigger initial filter
+      updateDisplay();
+    } catch (error) {
+      console.error('Error getting location:', error);
+    }
+  }
 
   function updatePagination() {
     const filteredCards = Array.from(productCards).filter(
@@ -314,8 +429,19 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   function updateDisplay() {
     // First, show all cards that match current filters
     productCards.forEach(card => {
-      if (currentCategory === "All Categories" || 
-          card.getAttribute("data-category") === currentCategory) {
+      // Check category match
+      const matchesCategory = currentCategory === "All Categories" || 
+                            card.getAttribute("data-category") === currentCategory;
+      
+      // Check search match
+      const title = card.querySelector("h3")?.textContent?.toLowerCase() || "";
+      const category = card.querySelector(".text-gray-500")?.textContent?.toLowerCase() || "";
+      const matchesSearch = !searchInput.value || 
+                          title.includes(searchInput.value.toLowerCase()) || 
+                          category.includes(searchInput.value.toLowerCase());
+      
+      // Show/hide card based on filters (removed warehouse check)
+      if (matchesCategory && matchesSearch) {
         card.style.display = "flex";
       } else {
         card.style.display = "none";
@@ -349,86 +475,35 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
     }
   }
 
-  // Fix search functionality
-  searchInput?.addEventListener("input", (e) => {
-    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+  // Event Listeners
+  searchInput?.addEventListener("input", () => {
     currentPage = 1;
-
-    let hasVisibleCards = false;
-    const originalCards = Array.from(productCards);
-
-    productCards.forEach((card) => {
-      const title = card.querySelector("h3")?.textContent?.toLowerCase() || "";
-      const category = card.querySelector(".text-gray-500")?.textContent?.toLowerCase() || "";
-
-      if (title.includes(searchTerm) || category.includes(searchTerm)) {
-        if (currentCategory === "All Categories" || 
-            card.getAttribute("data-category") === currentCategory) {
-          card.style.display = "flex";
-          hasVisibleCards = true;
-        } else {
-          card.style.display = "none";
-        }
-      } else {
-        card.style.display = "none";
-      }
-    });
-
-    if (!hasVisibleCards) {
-      showEmptyState("No items match your search. Try different keywords or filters.");
-    } else {
-      removeEmptyState();
-      // Restore original cards to the grid if they were removed
-      originalCards.forEach(card => {
-        if (!productGrid?.contains(card)) {
-          productGrid?.appendChild(card);
-        }
-      });
-      updatePagination();
-    }
+    updateDisplay();
+    trackSearch(searchInput.value);
+    checkShowDownloadPrompt();
   });
 
   // Get all product cards and category buttons
   const categoryButtons = document.querySelectorAll(
     ".flex.flex-wrap.justify-center button",
   );
-  let currentCategory = "All Categories";
 
   categoryButtons.forEach((button) => {
     button.addEventListener("click", () => {
       // Update active button styling
       categoryButtons.forEach((btn) => {
-        btn.classList.remove("bg-[#E9E0FE]", "text-black");
+        btn.classList.remove("bg-[#C0A4F9]", "text-black");
         btn.classList.add("bg-gray-100", "text-gray-700");
       });
       button.classList.remove("bg-gray-100", "text-gray-700");
-      button.classList.add("bg-[#E9E0FE]", "text-black");
+      button.classList.add("bg-[#C0A4F9]", "text-black");
 
-      // Get selected category
+      // Update category and display
       currentCategory = button.textContent?.trim() || "All Categories";
-
-      // Count visible items
-      let visibleCount = 0;
-
-      // Filter products
-      productCards.forEach((card) => {
-        if (currentCategory === "All Categories") {
-          card.style.display = "";
-          visibleCount++;
-        } else {
-          const cardCategory = card.getAttribute("data-category");
-          if (cardCategory === currentCategory) {
-            card.style.display = "";
-            visibleCount++;
-          } else {
-            card.style.display = "none";
-          }
-        }
-      });
-
-      // After filtering, reset to first page and update display
       currentPage = 1;
       updateDisplay();
+      trackCategoryFilter(currentCategory);
+      checkShowDownloadPrompt();
     });
   });
 
@@ -452,7 +527,177 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
     }
   });
 
-  // Initial setup - show first page
-  updateDisplay();
+  // Add warehouse change handler - will need to fetch new data in future
+  warehouseSelect?.addEventListener('change', () => {
+    // In future: Fetch new promoItems based on selected warehouse
+    currentPage = 1;
+    updateDisplay();
+    trackLocationChange(warehouseSelect.value);
+    checkShowDownloadPrompt();
+  });
+
+  // Close dialog when clicking outside
+  document.getElementById('priceHistoryDialog')?.addEventListener('click', (e) => {
+    if (e.target.id === 'priceHistoryDialog') {
+      closePriceHistory();
+    }
+  });
+
+  // Close dialog with ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePriceHistory();
+    }
+  });
+
+  // Add this at the start of your script
+  document.querySelectorAll('[data-price-history]').forEach(button => {
+    button.addEventListener('click', () => {
+      const priceHistory = JSON.parse(button.getAttribute('data-price-history') || '[]');
+      const productName = button.closest('.product-card')?.querySelector('h3')?.textContent;
+      showPriceHistory(priceHistory);
+      trackPriceHistoryView(productName, priceHistory);
+      checkShowDownloadPrompt();
+    });
+  });
+
+  // Add this with the other event listeners
+  document.getElementById('closeHistoryBtn')?.addEventListener('click', closePriceHistory);
+
+  // Add after other imports
+  mixpanel.init(import.meta.env.PUBLIC_MIXPANEL_TOKEN, {
+    debug: import.meta.env.DEV,
+    track_pageview: true,
+    persistence: 'localStorage',
+    ignore_dnt: true // Depending on your privacy requirements
+  });
+
+  // Update the trackUserAction function
+  function trackUserAction(action, metadata = {}) {
+    try {
+      mixpanel.track(action, {
+        ...metadata,
+        location: warehouseSelect?.value || 'unknown',
+        page: window.location.pathname,
+        platform: 'web_landing',  // Add platform identifier
+        source: 'deals_page',
+        device_type: getDeviceType(),
+        referrer: document.referrer || 'direct',
+        utm_source: new URLSearchParams(window.location.search).get('utm_source') || 'none'
+      });
+
+      // For user properties/profile
+      mixpanel.people.set({
+        'Last Active': new Date().toISOString(),
+        'Preferred Location': warehouseSelect?.value,
+        '$name': sessionStorage.getItem('user_email'),
+        'Platform': 'web_landing',
+        'Device Type': getDeviceType(),
+        'Last UTM Source': new URLSearchParams(window.location.search).get('utm_source') || 'none'
+      });
+
+    } catch (error) {
+      console.error('Analytics error:', error);
+    }
+  }
+
+  // Add helper function to detect device type
+  function getDeviceType() {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+      return 'tablet';
+    }
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+      return 'mobile';
+    }
+    return 'desktop';
+  }
+
+  // Update the download tracking
+  let userInteractions = 0;
+  function checkShowDownloadPrompt() {
+    userInteractions++;
+    if (userInteractions === 3) {
+      const downloadPrompt = document.createElement('div');
+      downloadPrompt.innerHTML = `
+        <div class="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg max-w-sm border-2 border-[#C0A4F9] z-50">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-bold text-lg">Want to Save More?</h3>
+            <button class="text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+              <Icon name="ic:baseline-close" class="w-5 h-5" />
+            </button>
+          </div>
+          <p class="text-gray-600 mb-3">Get automatic price drop alerts and save even more with the SavAI app!</p>
+          <a href="/" class="block w-full bg-black text-white text-center py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">
+            Download SavAI Now
+          </a>
+        </div>
+      `;
+      document.body.appendChild(downloadPrompt);
+      
+      trackUserAction('show_download_prompt', {
+        interaction_count: userInteractions,
+        trigger_events: mixpanel.get_property('recent_events'),
+        platform_source: 'web_landing',
+        device_type: getDeviceType()
+      });
+
+      // Track when user clicks download
+      downloadPrompt.querySelector('a')?.addEventListener('click', () => {
+        trackUserAction('click_download_prompt', {
+          interaction_count: userInteractions,
+          platform_source: 'web_landing',
+          destination_platform: 'mobile_app'
+        });
+      });
+
+      // Track when user dismisses
+      downloadPrompt.querySelector('button')?.addEventListener('click', () => {
+        trackUserAction('dismiss_download_prompt', {
+          interaction_count: userInteractions,
+          platform_source: 'web_landing'
+        });
+      });
+    }
+  }
+
+  // Update specific tracking functions with platform info
+  function trackSearch(query) {
+    trackUserAction('search_deals', {
+      query,
+      results_count: document.querySelectorAll('.product-card:not([style*="display: none"])').length,
+      platform: 'web_landing'
+    });
+  }
+
+  function trackCategoryFilter(category) {
+    trackUserAction('filter_deals_category', {
+      category,
+      results_count: document.querySelectorAll('.product-card:not([style*="display: none"])').length,
+      platform: 'web_landing'
+    });
+  }
+
+  function trackLocationChange(location) {
+    trackUserAction('change_warehouse_location', {
+      new_location: location,
+      previous_location: sessionStorage.getItem('previous_location'),
+      platform: 'web_landing'
+    });
+    sessionStorage.setItem('previous_location', location);
+  }
+
+  function trackPriceHistoryView(product, priceHistory) {
+    trackUserAction('view_price_history', {
+      product_name: product,
+      history_length: priceHistory.length,
+      max_savings: Math.max(...priceHistory.map(p => p.savings)),
+      current_price: priceHistory[0].final_price,
+      platform: 'web_landing'
+    });
+  }
+
+  // Initialize
+  setDefaultWarehouse();
 </script>
 
