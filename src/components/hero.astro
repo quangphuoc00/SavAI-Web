@@ -1,12 +1,12 @@
 ---
 import { Picture } from "astro:assets";
-import heroImage from "assets/hero.png";
+import heroImage from "assets/app_layout_1.png";
 import Link from "@components/ui/link.astro";
 import { Icon } from "astro-icon/components";
 ---
 
 <main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
+  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 sm:pb-12">
   <div class="py-6 md:order-1 hidden md:block">
     <Picture
       src={heroImage}
@@ -53,14 +53,6 @@ import { Icon } from "astro-icon/components";
   </div>
 </main>
 
-<style>
-  input[data-valid="false"]:not(:placeholder-shown) {
-    border-color: #ef4444;
-  }
-  input[data-valid="true"] {
-    border-color: #22c55e;
-  }
-</style>
 
 <script>
   import { supabase } from '../lib/supabase';

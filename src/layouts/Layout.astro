@@ -33,10 +33,28 @@ const makeTitle = title
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
+    <!-- Facebook SDK -->
+    <script is:inline>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml: true,
+          version: 'v18.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- Rest of your head content -->
     <SEO
       title={makeTitle}
-      description="Sav AI - Your AI-powered savings assistant. Download today and start saving smarter."
+      description="Sav AI. Never miss a price drop again."
       canonical={canonicalURL}
       twitter={{
         creator: "@surjithctly",
@@ -47,7 +65,7 @@ const makeTitle = title
         basic: {
           url: canonicalURL,
           type: "website",
-          title: `Sav AI - Your AI-powered savings assistant`,
+          title: `Sav AI. Never miss a price drop again.`,
           image: resolvedImageWithDomain,
         },
         image: {
@@ -57,9 +75,19 @@ const makeTitle = title
     />
   </head>
   <body>
+    <!-- Facebook Chat Plugin DOM elements -->
+    <div id="fb-root"></div>
+    <div 
+      id="fb-customer-chat" 
+      class="fb-customerchat" 
+      data-attribution="biz_inbox"
+      data-page_id="100068918122229">
+    </div>
+
     <Navbar />
     <slot />
     <Footer />
+    
     <style is:global>
       /* Improve Page speed */
       /* https://css-tricks.com/almanac/properties/c/content-visibility/ */

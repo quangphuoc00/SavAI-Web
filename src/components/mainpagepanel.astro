@@ -1,26 +1,26 @@
 ---
 import { Picture } from "astro:assets";
-import savingsImage from "assets/hero.png"; // You'll need this image
+import mainPanelImage from "../assets/main_panel_image.png";
 ---
 
-<main class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-16 md:pb-12">
-  <div>
+<main class="grid lg:grid-cols-2 gap-12 place-items-center pt-16 pb-8 md:pt-16 md:pb-12 px-8">
+  <div class="space-y-8">
     <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
       Never Miss a Price Drop Again
     </h1>
-    <p class="text-lg mt-4 text-slate-600 max-w-xl">
+    <p class="text-lg text-slate-600 max-w-xl">
       Let SavAI be your smart shopping assistant. We automatically track your purchases and get you refunds when prices drop, saving you time and money without any effort.
     </p>
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      <a href="/savai" class="bg-black text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800">
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="/" class="bg-black text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800">
         Start Saving Now
       </a>
     </div>
   </div>
   <div class="py-6 md:order-1 hidden md:block">
     <Picture
-      src={savingsImage}
-      alt="Save money with AI"
+      src={mainPanelImage}
+      alt="Main panel"
       widths={[200, 400, 600]}
       sizes="(max-width: 800px) 100vw, 620px"
       loading="eager"
