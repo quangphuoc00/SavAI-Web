@@ -5,165 +5,44 @@ import { supabase } from '../lib/supabase';
 
 // Add locations array at the top with other constants
 const locations = [
-  "Calgary, AB",
-  "Edmonton, AB", 
-  "Langley, BC",
-  "Vancouver, BC",
-  "Winnipeg, MB",
-  "Burlington, ON",
-  "London, ON",
-  "Mississauga & Oakville, ON",
-  "Ottawa, ON", 
-  "Toronto, ON",
-  "Saskatoon, SK"
+  "Alberta, CA",
+  "British Columbia, CA",
+  "Manitoba, CA",
+  "Ontario, CA",
+  "Saskatchewan, CA"
 ];
 
-const promoItems = [
-  {
-    name: "Benadryl Allergy",
-    image: "https://west.cocowest1.ca/uploads/2025/01/BENADRYL_ALLERGY_25_MG_185_CAPLETS_20250127_195014.jpeg",
-    category: "Health & Beauty",
-    price_history: [
-      {
-        posted_date: "2024-02-10",
-        savings: 5.00,
-        expiry_date: "2024-04-28",
-        final_price: 19.99
-      },
-      {
-        posted_date: "2024-02-07",
-        savings: 2.50,
-        expiry_date: "2024-04-21",
-        final_price: 22.49
-      },
-      {
-        posted_date: "2023-10-28",
-        savings: 3.00,
-        expiry_date: "2023-11-30",
-        final_price: 21.99
-      }
-    ]
-  },
-  {
-    name: "Island Farms Milk",
-    image: "https://west.cocowest1.ca/uploads/2024/04/ISLAND_FARMS_2_MILK_4L_20240423_163007.jpg",
-    category: "Fresh Food",
-    price_history: [
-      {
-        posted_date: "2024-02-10",
-        savings: 1.00,
-        expiry_date: "2024-04-21",
-        final_price: 5.99
-      },
-      {
-        posted_date: "2024-01-15",
-        savings: 0.50,
-        expiry_date: "2024-02-15",
-        final_price: 6.49
-      }
-    ]
-  },
-  {
-    name: "Glaxal Base Cream",
-    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-    price_history: [
-      {
-        posted_date: "2024-02-15",
-        savings: 4.00,
-        expiry_date: "2024-04-30",
-        final_price: 15.99
-      },
-      {
-        posted_date: "2024-01-20",
-        savings: 2.00,
-        expiry_date: "2024-02-10",
-        final_price: 17.99
-      },
-      {
-        posted_date: "2023-12-01",
-        savings: 3.00,
-        expiry_date: "2023-12-31",
-        final_price: 16.99
-      }
-    ]
-  },
-  {
-    name: "Glaxal Base Cream",
-    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-    price_history: [
-      {
-        posted_date: "2024-02-15",
-        savings: 4.00,
-        expiry_date: "2024-04-30",
-        final_price: 15.99
-      },
-      {
-        posted_date: "2024-01-20",
-        savings: 2.00,
-        expiry_date: "2024-02-10",
-        final_price: 17.99
-      },
-      {
-        posted_date: "2023-12-01",
-        savings: 3.00,
-        expiry_date: "2023-12-31",
-        final_price: 16.99
-      }
-    ]
-  },
-  {
-    name: "Glaxal Base Cream",
-    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-    price_history: [
-      {
-        posted_date: "2024-02-15",
-        savings: 4.00,
-        expiry_date: "2024-04-30",
-        final_price: 15.99
-      },
-      {
-        posted_date: "2024-01-20",
-        savings: 2.00,
-        expiry_date: "2024-02-10",
-        final_price: 17.99
-      },
-      {
-        posted_date: "2023-12-01",
-        savings: 3.00,
-        expiry_date: "2023-12-31",
-        final_price: 16.99
-      }
-    ]
-  },
-  {
-    name: "Glaxal Base Cream",
-    image: "https://west.cocowest1.ca/uploads/2024/11/GLAXAL_BASE_CREAM_450g___50_g_20241115_185487.jpg",
-    category: "Health & Beauty",
-    price_history: [
-      {
-        posted_date: "2024-02-15",
-        savings: 4.00,
-        expiry_date: "2024-04-30",
-        final_price: 15.99
-      },
-      {
-        posted_date: "2024-01-20",
-        savings: 2.00,
-        expiry_date: "2024-02-10",
-        final_price: 17.99
-      },
-      {
-        posted_date: "2023-12-01",
-        savings: 3.00,
-        expiry_date: "2023-12-31",
-        final_price: 16.99
-      }
-    ]
+let promoItems = [];
+let error = null;
+
+try {
+  const apiUrl = import.meta.env.PUBLIC_API_URL;
+  const response = await fetch(`${apiUrl}/1`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
   }
-];
+  const result = await response.json();
+  if (result.success) {
+    promoItems = result.data.map(item => ({
+      name: item.name,
+      image: item.image_url,
+      category: item.category,
+      sku: item.sku,
+      price_history: item.price_history.map(history => ({
+        date_posted: history.date_posted,
+        savings: history.savings,
+        expiry_date: history.expiry,
+        final_price: history.final_price
+      }))
+    }));
+  } else {
+    throw new Error('API returned success: false');
+  }
+} catch (e) {
+  console.error('Error fetching promo items:', e);
+  error = e.message;
+  promoItems = []; // Set to empty array if there's an error
+}
 
 // Get unique categories that have items
 const availableCategories = [
@@ -185,7 +64,7 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   <!-- Search and Location Row -->
   <div class="max-w-xl mx-auto mt-8 flex gap-4">
     <!-- Location Selector -->
-    <div class="relative w-1/3">
+    <div class="relative w-2/5">
       <select
         id="warehouseSelect"
         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
@@ -264,7 +143,9 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
       return (
         <div
           class="product-card flex flex-col border rounded-lg shadow-sm hover:shadow-md transition-shadow"
-          data-category={item.category}>
+          data-category={item.category}
+          style="display: none;"
+        >
           <div class="p-4">
             <div class="relative">
               <img
@@ -276,7 +157,7 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
                 <span class="text-lg font-bold">Save ${currentPrice.savings.toFixed(2)}</span>
               </div>
             </div>
-            <h3 class="font-semibold text-lg">{item.name}</h3>
+            <h3 class="font-semibold text-lg line-clamp-3 min-h-[4.5rem] leading-[1.5rem] h-[4.5rem]">{item.name}</h3>
             <p class="text-sm text-gray-500 mt-1">{item.category}</p>
             <div class="mt-4 flex items-center gap-2">
               <p class="text-2xl font-bold text-red-600">${currentPrice.final_price}</p>
@@ -296,6 +177,12 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
     })
   }
 </div>
+
+{error && (
+  <div class="text-center p-4 text-red-600">
+    <p>Error loading promotional items. Please try again later.</p>
+  </div>
+)}
 
 <!-- Add pagination controls -->
 <div class="flex justify-center items-center gap-2 mt-12 mb-16">
@@ -318,6 +205,16 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
 </div>
 
 <script>
+  // Add at the top of script
+  let promoItems = [];
+  const provinceToId = {
+    "Alberta, CA": 1,
+    "British Columbia, CA": 20,
+    "Manitoba, CA": 34,
+    "Ontario, CA": 43,
+    "Saskatchewan, CA": 107
+  };
+
   // Move these functions to the top of the script
   function showPriceHistory(priceHistory) {
     const dialog = document.getElementById('priceHistoryDialog');
@@ -326,7 +223,7 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
       if (tbody) {
         tbody.innerHTML = priceHistory.map((record, index) => `
           <tr class="${index % 2 === 0 ? 'border-b bg-gray-50' : 'border-b'}">
-            <td class="py-2">${new Date(record.posted_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
+            <td class="py-2">${new Date(record.date_posted).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
             <td class="py-2">${new Date(record.expiry_date).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
             <td class="py-2">$${record.savings.toFixed(2)}</td>
             <td class="py-2">$${record.final_price}</td>
@@ -367,12 +264,38 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
       const response = await fetch('https://ipapi.co/json/');
       const data = await response.json();
       
-      // Find closest warehouse based on latitude/longitude
-      // For now, just default to Vancouver, BC
-      warehouseSelect.value = "Vancouver, BC";
+      // For now, just default to British Columbia
+      warehouseSelect.value = "British Columbia, CA";
       
-      // Trigger initial filter
-      updateDisplay();
+      // Trigger initial filter with default province ID
+      const defaultProvinceId = provinceToId["British Columbia, CA"];
+      const apiUrl = import.meta.env.PUBLIC_API_URL;
+      const promoResponse = await fetch(`${apiUrl}/${defaultProvinceId}`);
+      if (!promoResponse.ok) {
+        const errorMessage = await promoResponse.text();
+        throw new Error(`HTTP error! status: ${promoResponse.status}, message: ${errorMessage}`);
+      }
+      const result = await promoResponse.json();
+      if (result.success) {
+        promoItems = result.data.map(item => ({
+          name: item.name,
+          image: item.image_url,
+          category: item.category,
+          sku: item.sku,
+          price_history: item.price_history.map(history => ({
+            date_posted: history.date_posted,
+            savings: history.savings,
+            expiry_date: history.expiry,
+            final_price: history.final_price
+          }))
+        }));
+        
+        // Reset pagination and update display
+        currentPage = 1;
+        updateDisplay();
+      } else {
+        throw new Error('API returned success: false');
+      }
     } catch (error) {
       console.error('Error getting location:', error);
     }
@@ -554,10 +477,42 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
   });
 
   // Add warehouse change handler - will need to fetch new data in future
-  warehouseSelect?.addEventListener('change', () => {
-    // In future: Fetch new promoItems based on selected warehouse
-    currentPage = 1;
-    updateDisplay();
+  warehouseSelect?.addEventListener('change', async () => {
+    const selectedProvince = warehouseSelect.value;
+    const provinceId = provinceToId[selectedProvince];
+    
+    try {
+      const apiUrl = import.meta.env.PUBLIC_API_URL;
+      const response = await fetch(`${apiUrl}/${provinceId}`);
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+      }
+      const result = await response.json();
+      if (result.success) {
+        promoItems = result.data.map(item => ({
+          name: item.name,
+          image: item.image_url,
+          category: item.category,
+          sku: item.sku,
+          price_history: item.price_history.map(history => ({
+            date_posted: history.date_posted,
+            savings: history.savings,
+            expiry_date: history.expiry,
+            final_price: history.final_price
+          }))
+        }));
+        
+        // Reset pagination and update display
+        currentPage = 1;
+        updateDisplay();
+      } else {
+        throw new Error('API returned success: false');
+      }
+    } catch (error) {
+      console.error('Error fetching promo items:', error);
+      // Optionally show error to user
+    }
   });
 
   // Close dialog when clicking outside
@@ -588,5 +543,6 @@ const totalPages = Math.ceil(promoItems.length / itemsPerPage);
 
   // Initialize
   setDefaultWarehouse();
+  updateDisplay();
 </script>
 
